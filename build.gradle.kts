@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
 }
 
 tasks.test {
@@ -27,3 +28,4 @@ tasks.withType<KotlinCompile>() {
 application {
     mainClass.set("MainKt")
 }
+
