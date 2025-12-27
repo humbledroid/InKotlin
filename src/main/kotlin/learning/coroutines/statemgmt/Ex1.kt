@@ -2,26 +2,45 @@ package learning.coroutines.statemgmt
 
 import kotlinx.coroutines.*
 import kotlin.random.Random
+//
+//fun main() = runBlocking {
+//    val revenue = orders().map {
+//        async (Dispatchers.Default) {
+//            calculatePrice(it.item, it.membership)
+//        }
+//    }.sumOf {
+//        it.await()
+//    }
+//
+//    val deferred: MutableList<Deferred<Long>> = mutableListOf()
+//    for (order in orders()){
+//        deferred.add(
+//           async { calculatePrice(order.item, order.membership) }
+//        )
+//    }
+//
+//    val result = deferred.sumOf { it.await() }
+//
+//    val formatted = "$%,d".format(result)
+//    println("Today's revenue is $formatted.")
+//}
 
-fun main() = runBlocking {
-    val revenue = orders().map {
-        async (Dispatchers.Default) {
-            calculatePrice(it.item, it.membership)
+fun main() {
+    val synchronized = Dispatchers.Default.limitedParallelism(1)
+    var revenue = 0L
+
+    runBlocking {
+        for(order in orders()){
+            launch(Dispatchers.Default) {
+                val price = calculatePrice(order.item, order.membership)
+                withContext(synchronized){
+                    revenue += price
+                }
+            }
         }
-    }.sumOf {
-        it.await()
     }
 
-    val deferred: MutableList<Deferred<Long>> = mutableListOf()
-    for (order in orders()){
-        deferred.add(
-           async { calculatePrice(order.item, order.membership) }
-        )
-    }
-
-    val result = deferred.sumOf { it.await() }
-
-    val formatted = "$%,d".format(result)
+    val formatted = "$%,d".format(revenue)
     println("Today's revenue is $formatted.")
 }
 
