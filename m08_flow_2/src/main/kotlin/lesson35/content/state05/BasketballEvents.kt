@@ -1,0 +1,42 @@
+package lesson35.content.state05
+
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.merge
+import kotlin.time.Duration.Companion.milliseconds
+
+@OptIn(ExperimentalCoroutinesApi::class)
+suspend fun main() {
+    val andrew = Player("🧑🏻‍🦰", flow {
+        println("Loading events for 🧑🏻‍🦰...")
+        delay(500.milliseconds); emit(TWO_POINTER)
+        delay(750.milliseconds); emit(REBOUND)
+        delay(500.milliseconds); emit(ASSIST)
+        println("All events loaded for 🧑🏻‍🦰")
+    })
+    val brian = Player("🧔🏽‍♂️", flow {
+        println("Loading events for 🧔🏽‍♂️...")
+        delay(250.milliseconds); emit(STEAL)
+        delay(750.milliseconds); emit(STEAL)
+        delay(750.milliseconds); emit(FOUL)
+        println("All events loaded for 🧔🏽‍♂️")
+    })
+    val cornelius = Player("👨🏾‍🦲", flow {
+        println("Loading events for 👨🏾‍🦲...")
+        delay(750.milliseconds); emit(THREE_POINTER)
+        delay(125.milliseconds); emit(FREE_THROW)
+        delay(500.milliseconds); emit(TWO_POINTER)
+        println("All events loaded for 👨🏾‍🦲")
+    })
+
+    merge(andrew.events, brian.events, cornelius.events)
+        .collect { println("Event: $it") }
+}
+
+class Player(val label: String, val events: Flow<BasketballEvent>)
+
+enum class BasketballEvent {
+    FREE_THROW, TWO_POINTER, THREE_POINTER, REBOUND, ASSIST, STEAL, FOUL
+}
