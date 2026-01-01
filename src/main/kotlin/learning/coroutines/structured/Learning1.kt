@@ -6,8 +6,24 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.time.Duration.Companion.seconds
 
+//fun main() = runBlocking<Unit>{
+//    val scope = this
+//    scope.launch {
+//        delay(2.seconds)
+//        println("Hello World")
+//    }
+//    scope.launch {
+//        delay(2.seconds)
+//        println("Hello World 2")
+//    }
+//    scope.launch {
+//        delay(2.seconds)
+//        println("Hello World 3")
+//    }
+//}
+
 fun main() = runBlocking<Unit>{
-    val scope = this
+    val scope = GlobalScope
     scope.launch {
         delay(2.seconds)
         println("Hello World")
@@ -21,3 +37,4 @@ fun main() = runBlocking<Unit>{
         println("Hello World 3")
     }
 }
+
