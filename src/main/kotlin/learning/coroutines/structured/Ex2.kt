@@ -8,16 +8,22 @@ fun main() {
     runBlocking(Dispatchers.Default) {
         println("Started")
         println("Scope is $this")
-        doKitchenPrep()
-        doCustomerPrep()
-        doCleanup()
+        launch {
+            doKitchenPrep()
+        }
+        launch {
+            doCustomerPrep()
+        }
+        launch {
+            doCleanup()
+        }
     }
 
     println("🥐 The bakery is ready to open!")
 }
 
-fun CoroutineScope.doCleanup(){
-    launch {
+suspend fun doCleanup(){
+    coroutineScope {
         launch {
             delay(1.2.seconds)
             println("🧽 Counters are clean.")
@@ -26,11 +32,12 @@ fun CoroutineScope.doCleanup(){
             delay(1.seconds)
             println("🧼 Dishes are clean.")
         }
-    }.invokeOnCompletion { println("✅ Clean-up is complete") }
+    }
+    println("✅ Clean-up is complete")
 }
 
-fun CoroutineScope.doCustomerPrep() {
-    launch {
+suspend fun doCustomerPrep() {
+    coroutineScope {
         launch {
             delay(1.seconds)
             println("☕ Coffee is ready.")
@@ -39,12 +46,13 @@ fun CoroutineScope.doCustomerPrep() {
             delay(800.milliseconds)
             println("📋 Menu is ready.")
         }
-    }.invokeOnCompletion { println("✅ Customer prep is complete") }
+    }
+
+    println("✅ Customer prep is complete")
 }
 
-
-fun CoroutineScope.doKitchenPrep() {
-    launch {
+suspend fun doKitchenPrep() {
+    coroutineScope {
         launch {
             delay(2.seconds)
             println("🍞 Dough is ready.")
@@ -57,5 +65,6 @@ fun CoroutineScope.doKitchenPrep() {
             delay(3.seconds)
             println("🥐 Croissants are baked.")
         }
-    }.invokeOnCompletion { println("✅ Kitchen prep is complete") }
+    }
+    println("✅ Kitchen prep is complete")
 }
