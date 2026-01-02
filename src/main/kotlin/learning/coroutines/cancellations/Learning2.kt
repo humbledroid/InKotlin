@@ -13,12 +13,16 @@ fun main() {
     lateinit var peterOrder: Job
 
     suspend fun prepare(food: String, duration: Duration) {
+        try {
         println("$food - Preparing")
         repeat(10){
             Thread.sleep(duration.inWholeMilliseconds/10)
             coroutineContext.ensureActive()
         }
         println("$food - Ready")
+        } catch (e: Exception) {
+            println(e)
+        }
     }
 
     val tableOrder = scope.launch {
