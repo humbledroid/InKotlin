@@ -2,30 +2,31 @@ package learning.coroutines.cancellations
 
 import kotlinx.coroutines.*
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.coroutines.coroutineContext
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 fun main() {
-
-    suspend fun prepare(food: String, duration: Duration) {
-        println("$food - Preparing")
-        delay(duration)
-        println("$food - Ready")
-    }
-
     val scope = CoroutineScope(EmptyCoroutineContext)
 
     lateinit var sallyOrder: Job
     lateinit var peterOrder: Job
 
-    lateinit var cakeOrder: Job
+    suspend fun prepare(food: String, duration: Duration) {
+        println("$food - Preparing")
+        repeat(10){
+            Thread.sleep(duration.inWholeMilliseconds/10)
+            coroutineContext.ensureActive()
+        }
+        println("$food - Ready")
+    }
 
     val tableOrder = scope.launch {
         sallyOrder = launch {
             launch { prepare("1 🍔 Hamburger", 5.seconds) }
             launch { prepare("1 🍟 Fries    ", 3.seconds) }
             launch { prepare("1 🥗 Salad    ", 2.seconds) }
-            cakeOrder = launch { prepare("1 🍰 Cake     ", 4.seconds) }
+            launch { prepare("1 🍰 Cake     ", 4.seconds) }
         }
         peterOrder = launch {
             launch { prepare("2 🥩 Steak    ", 4.seconds) }
@@ -42,6 +43,8 @@ fun main() {
         // sallyOrder.cancel() // cancel sally's order
 
         // tableOrder.cancel() // cancel all the coroutines/jobs
+        tableOrder.cancel()
         tableOrder.join()
     }
 }
+
