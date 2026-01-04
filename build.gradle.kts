@@ -22,6 +22,11 @@ tasks.test {
 
 kotlin {
     jvmToolchain(21)
+    target {
+        compilerOptions {
+            freeCompilerArgs.add("-Xmulti-dollar-interpolation")
+        }
+    }
 }
 
 java {
