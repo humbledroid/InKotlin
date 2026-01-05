@@ -12,6 +12,13 @@ val stayClosedFor = 2.seconds
 val job: MutableList<Job> = synchronizedList(mutableListOf<Job>())
 
 fun main() {
+    appScope.launch {
+        while (true) {
+            println("Recording")
+            delay(0.5.seconds)
+        }
+    }
+
     runBlocking {
         runDay("Thursday")
         runDay("Friday")
