@@ -1,6 +1,7 @@
 package learning.coroutines.patterns
 
 import kotlinx.coroutines.*
+import java.util.Collections.synchronizedList
 import kotlin.time.Duration.Companion.seconds
 
 val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -8,13 +9,14 @@ val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 val stayOpenFor = 4.seconds
 val stayClosedFor = 2.seconds
 
+val job: MutableList<Job> = synchronizedList(mutableListOf<Job>())
+
 fun main() {
     runBlocking {
-        runDay("Monday")
-        runDay("Tuesday")
-        runDay("Wednesday")
         runDay("Thursday")
         runDay("Friday")
+
+        job.joinAll()
     }
 }
 
@@ -57,11 +59,22 @@ class WorkDay(private val day: String) {
      * Use app wide scopes when something is supposed to run longer
      * than the span provided by local scope
      */
-    fun processReports() = appScope.launch {
-        repeat(4) {
+    private fun processReports() = appScope.launch {
+        val count = if(day == "Friday") 12 else 4
+        repeat(count) {
             println("📝 $day: Processing reports...")
             delay(0.25.seconds)
         }
         println("📝 $day: Reports are done")
+    }.also {
+        job.add(it)
     }
+    /**
+     * So here the appScope might work for very short work, but something
+     * that is long-running the app may close well before the coroutine launched
+     * in the scope, completed the work.
+     *
+     * so we make a synchronizedList of jobs and push the job in that and in
+     * main we wait for all those job to complete via .joinAll()
+     */
 }
