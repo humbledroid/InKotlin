@@ -14,6 +14,7 @@ dependencies {
     testImplementation(kotlin("test"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
     implementation("io.github.serpro69:kotlin-faker:1.16.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
 }
 
 tasks.test {
