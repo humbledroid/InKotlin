@@ -2,11 +2,22 @@ package neetcode
 
 class TwoSum {
     fun twoSum(nums: IntArray, target: Int): IntArray {
-        for (i in nums.indices) {
-            for (j in i + 1 until nums.size) {
-                if (nums[i] + nums[j] == target) {
-                    return intArrayOf(i, j)
-                }
+        // bruteforce
+//        for (i in nums.indices) {
+//            for (j in i + 1 until nums.size) {
+//                if (nums[i] + nums[j] == target) {
+//                    return intArrayOf(i, j)
+//                }
+//            }
+//        }
+        val remainingPortionWithIndex = mutableMapOf<Int, Int>()
+
+        nums.forEachIndexed { index, num ->
+            val remainingPortion = target - num
+            if(remainingPortionWithIndex.containsKey(remainingPortion)) {
+                return intArrayOf(remainingPortionWithIndex[remainingPortion]!!, index)
+            } else {
+                remainingPortionWithIndex[num] = index
             }
         }
 
