@@ -40,6 +40,25 @@ fun main() = runBlocking {
 //    }catch (e: OutOfStockException) {
 //        println("OutOfStockException: ${e.message}")
 //    }
+//
+//    flow {
+//        emit("🥛")
+//        emit("🍉")
+//        emit("🍊")
+//        emit("🍇")
+//        emit("🥦")
+//    }
+//        .onEach {
+//            println("Looking for: $it")
+//        }
+//        .map { findOnShelf(it) }
+//        .catch { throwable ->
+//            if(throwable is OutOfStockException) emit(GroceryItem("$5 Coupon", price = -5_00))
+//        }
+//        .collect {
+//            println("Adding to cart: ${it.label}")
+//        }
+
 
     flow {
         emit("🥛")
@@ -52,8 +71,13 @@ fun main() = runBlocking {
             println("Looking for: $it")
         }
         .map { findOnShelf(it) }
-        .catch { throwable ->
-            if(throwable is OutOfStockException) emit(GroceryItem("$5 Coupon", price = -5_00))
+//        .retry(2) { throwable ->
+//            println(" ------------------ ")
+//            throwable == OutOfStockException("🍊")
+//        }
+        .retryWhen { throwable, attemp ->
+            println("Retry $attemp -------------")
+            throwable == OutOfStockException("🍊")
         }
         .collect {
             println("Adding to cart: ${it.label}")
@@ -61,12 +85,14 @@ fun main() = runBlocking {
 
     println("Done with grocery shopping")
 }
-
+var count = 0
 suspend fun findOnShelf(label: String): GroceryItem {
+    count++
     delay(250.milliseconds)
     return when (label) {
         "🥛"  -> GroceryItem("🥛 Milk", 3_39)
         "🍉"  -> GroceryItem("🍉 Watermelon", 5_99)
+        "🍊" -> if(count > 8) GroceryItem("🍊", 1_29) else throw OutOfStockException(label)
         "🍇"  -> GroceryItem("🍇 Grapes", 5_49)
         "🥦"  -> GroceryItem("🥦 Broccoli", 2_99)
         else -> throw OutOfStockException(label)
