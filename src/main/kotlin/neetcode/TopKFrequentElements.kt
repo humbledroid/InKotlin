@@ -13,31 +13,30 @@ class TopKFrequentElements {
 
     // with bucket sort
     fun topKFrequent(nums: IntArray, k: Int): IntArray {
-        val map = mutableMapOf<Int, Int>()
+        val frequencyMap = mutableMapOf<Int, Int>()
         nums.forEach {
-             map[it] = map.getOrDefault(it, 0) + 1
+            frequencyMap[it] = frequencyMap.getOrDefault(it, 0) + 1
         }
 
-        println(nums.toString())
+        val result = mutableListOf<Int>()
 
-        val buckets = MutableList<MutableList<Int>>(nums.size+1) {mutableListOf()}
-        for( (num, count) in map) {
-            buckets[count].add(num)
+        val bucket = MutableList<MutableList<Int>>(nums.size+1){mutableListOf()}
+
+        frequencyMap.forEach { (num, count) ->
+            bucket[count].add(num)
         }
+        // now we have the bucket, or sort of count sort bucket, where
+        // higher index is the most frequent one
 
-        val res = mutableListOf<Int>()
-
-        for (i in buckets.size - 1 downTo 0) {
-            for(num in buckets[i]) {
-                res.add(num)
-                if(res.size == k) return res.toIntArray()
+        for (i in bucket.size - 1 downTo 0) {
+            bucket[i].forEach { n ->
+                result.add(n)
+                if(result.size == k) return result.toIntArray()
             }
         }
 
-        return res.toIntArray()
+        return result.toIntArray()
     }
-
-    // will attempt tomorrow for heap based solution
 }
 
 fun main() {
