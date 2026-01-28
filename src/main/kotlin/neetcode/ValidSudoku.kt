@@ -3,6 +3,27 @@ package neetcode
 class ValidSudoku {
     fun isValidSudoku(board: Array<CharArray>): Boolean {
 
+        val rows = Array(9) { HashSet<Char>() }
+        val columns = Array(9) { HashSet<Char>() }
+
+        val boxes = Array(9) { HashSet<Char>() }
+
+        for(r in 0..8) {
+            for (c in 0..8) {
+                val char = board[r][c]
+
+                if(char == '.') continue
+
+                val boxIndex = (r/3) * 3 + (c/3)
+
+                if(char in rows[r] || char in columns[c] || char in boxes[boxIndex]) return false
+
+                rows[r].add(char)
+                columns[c].add(char)
+                boxes[boxIndex].add(char)
+            }
+        }
+
         return true
     }
 }
