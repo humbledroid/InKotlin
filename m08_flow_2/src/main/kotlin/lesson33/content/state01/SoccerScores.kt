@@ -22,3 +22,9 @@ fun main() {
         }
     }
 }
+
+/**
+ * Here when running the program we will see an effect, called, buffering, as soon as 64 items are emitted, the emitter will be suspsned
+ * further, unless, the buffer is emptied after 10 second of consumption, and one by one after every 10 second, the buffer
+ * gets emptied by 1, the 1 more value will get emitted by the emitted
+ */
