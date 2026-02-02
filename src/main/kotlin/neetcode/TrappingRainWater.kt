@@ -27,18 +27,18 @@ class TrappingRainWater {
         var result = 0
         var start = 0
         var end = height.lastIndex
-        var leftMaxSoFar = height[0]
-        var rightMaxSoFar = height[end]
+        var leftMax = 0
+        var rightMax = height[end]
 
         while(start < end) {
-            if(leftMaxSoFar < rightMaxSoFar) {
+            if(leftMax < rightMax) {
                 start++
-                leftMaxSoFar = maxOf(leftMaxSoFar, height[start])
-                result += leftMaxSoFar - height[start]
+                leftMax = maxOf(leftMax, height[start])
+                result += leftMax - height[start]
             }else{
                 end--
-                rightMaxSoFar = maxOf(rightMaxSoFar, height[end])
-                result += rightMaxSoFar - height[end]
+                rightMax = maxOf(rightMax, height[end])
+                result += rightMax - height[end]
             }
         }
 
