@@ -22,9 +22,31 @@ class TrappingRainWater {
 
         return result
     }
+
+    fun trapWithTwoPointers(height: IntArray): Int {
+        var result = 0
+        var start = 0
+        var end = height.lastIndex
+        var leftMaxSoFar = height[0]
+        var rightMaxSoFar = height[end]
+
+        while(start < end) {
+            if(leftMaxSoFar < rightMaxSoFar) {
+                start++
+                leftMaxSoFar = maxOf(leftMaxSoFar, height[start])
+                result += leftMaxSoFar - height[start]
+            }else{
+                end--
+                rightMaxSoFar = maxOf(rightMaxSoFar, height[end])
+                result += rightMaxSoFar - height[end]
+            }
+        }
+
+        return result
+    }
 }
 
 fun main() {
     val trapWater = TrappingRainWater()
-    println(trapWater.trap(intArrayOf(0,1,0,2,1,0,1,3,2,1,2,1)))
+    println(trapWater.trapWithTwoPointers(intArrayOf(0,1,0,2,1,0,1,3,2,1,2,1)))
 }
