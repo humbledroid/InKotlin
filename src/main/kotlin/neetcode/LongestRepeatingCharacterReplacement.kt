@@ -30,7 +30,7 @@ class LongestRepeatingCharacterReplacement {
         for (i in s.indices) {
             count[s[i]] = count.getOrDefault(s[i], 0) + 1
             maxF = maxOf(maxF, count[s[i]]!!)
-            while(i-l+1 - maxF > k) {
+            if(i-l+1 - maxF > k) {
                 count[s[l]] = count[s[l]]!! - 1
                 l++
             }
