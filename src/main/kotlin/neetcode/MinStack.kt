@@ -2,7 +2,7 @@ package neetcode
 
 import java.util.*
 
-class MinStack() {
+class MinStack {
     private val stack = Stack<Pair<Int, Int>>()
 
     fun push(`val`: Int) {
