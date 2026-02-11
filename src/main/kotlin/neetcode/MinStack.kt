@@ -6,11 +6,11 @@ class MinStack() {
     private val stack = Stack<Pair<Int, Int>>()
 
     fun push(`val`: Int) {
-        if(stack.isEmpty()) {
+        if(stack.isEmpty()){
             stack.push(`val` to `val`)
-        }else{
-            val currentMin = minOf(`val`, stack.peek().second)
-            stack.push(`val` to currentMin)
+        } else {
+            val newMin = if(stack.peek().second > `val`){ `val`} else stack.peek().second
+            stack.push(`val` to newMin)
         }
     }
 
