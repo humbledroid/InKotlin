@@ -1,7 +1,6 @@
 package neetcode.revision
 
 import java.util.*
-import kotlin.math.max
 
 class LargestRectangleRev {
     fun largestRectangleArea(heights: IntArray): Int {
