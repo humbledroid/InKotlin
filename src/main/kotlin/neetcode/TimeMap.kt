@@ -4,10 +4,9 @@ class TimeMap() {
     private val storage = HashMap<String, MutableList<Pair<String, Int>>>()
 
     fun set(key: String, value: String, timestamp: Int) {
-        if (!storage.containsKey(key)) {
-            storage[key] = mutableListOf()
-        }
-        storage[key]!!.add(Pair(value, timestamp))
+        storage.getOrPut(key) {
+            mutableListOf()
+        }.add(value to timestamp)
     }
 
     fun get(key: String, timestamp: Int): String {
