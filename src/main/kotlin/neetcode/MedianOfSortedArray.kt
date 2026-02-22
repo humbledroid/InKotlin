@@ -1,7 +1,5 @@
 package neetcode
 
-import kotlin.math.max
-import kotlin.math.min
 
 class MedianOfSortedArray {
     fun findMedianSortedArrays(nums1: IntArray, nums2: IntArray): Double {
