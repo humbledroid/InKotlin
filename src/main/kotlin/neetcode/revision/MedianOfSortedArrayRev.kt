@@ -8,10 +8,10 @@ class MedianOfSortedArrayRev {
         val isEven = (a.size + b.size) % 2 == 0
 
         var left = 0
-        var right = 0
+        var right = a.size
 
         while (left <= right) {
-            val aMid = left + right / 2
+            val aMid = (left + right) / 2
             val bMid = half - aMid // whatever partition is left from A
 
             val aLeftPartition = a.getOrElse(aMid - 1) { Int.MIN_VALUE }
@@ -22,10 +22,11 @@ class MedianOfSortedArrayRev {
 
             when {
                 aLeftPartition <= bRightPartition && bLeftPartition <= aRightPartition ->
-                    return if (isEven) maxOf(
+                    return if (isEven) (maxOf(
                         aLeftPartition,
                         bLeftPartition
-                    ) + minOf(aRightPartition, bRightPartition) / 2.0 else maxOf(
+                    ) + minOf(aRightPartition, bRightPartition)) / 2.0
+                    else maxOf(
                         aLeftPartition,
                         bLeftPartition
                     ).toDouble()
@@ -37,6 +38,6 @@ class MedianOfSortedArrayRev {
 
         }
 
-        return 1.0
+        return 0.0
     }
 }
