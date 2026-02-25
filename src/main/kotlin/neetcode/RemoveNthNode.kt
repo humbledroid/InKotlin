@@ -9,21 +9,18 @@ class RemoveNthNode {
         var left: ListNode? = dummy
         var right: ListNode? = head
 
-
         var count = n
-
-        while(count != 0) {
+        while(count != 0){
             right = right?.next
             count--
         }
-
-        while (right != null) {
+        while(right != null){
             left = left?.next
             right = right.next
         }
 
-
         left?.next = left?.next?.next
+
         return dummy.next
     }
 }
