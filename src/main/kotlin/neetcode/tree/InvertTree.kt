@@ -25,4 +25,13 @@ class InvertTree {
 
         return root
     }
+
+    fun invertTreeRec(root: TreeNode?): TreeNode? {
+        if (root == null) return null
+        return root.apply {
+            left = invertTreeRec(right).also {
+                right = invertTreeRec(left)
+            }
+        }
+    }
 }
