@@ -29,6 +29,18 @@ class InvertTreeRev {
         return root.apply { left = invertTreeRec(right).also { right = invertTreeRec(root.left) } }
     }
 
+    fun invertTreeRecEasy(root: TreeNode?): TreeNode? {
+        if (root == null) return null
+
+        val temp = root.left
+        root.left = root.right
+        root.right = temp
+
+        invertTreeRecEasy(root.left)
+        invertTreeRecEasy(root.right)
+
+        return root
+    }
 
 
 }
