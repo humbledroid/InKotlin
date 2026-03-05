@@ -30,6 +30,29 @@ fun main() {
      *     ← 7 + 2 = 9
      *   ← 3 + 9 = 12
      */
+
+    fun factorial(n: Int): Int {
+        if(n == 0) return 1
+
+        return n * factorial(n - 1)
+    }
+
+    println(factorial(5))
+
+
+    // memoization
+    fun fib(n: Int, memo: MutableMap<Int, Int>): Int {
+        if(n <= 1) return 1
+
+        if(n in memo) return memo[n]!!
+
+        val result = fib(n - 1, memo) + fib(n - 2, memo)
+        memo[n] = result
+
+        return result
+    }
+
+    println(fib(5, mutableMapOf<Int, Int>()))
 }
 
 
