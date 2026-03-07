@@ -1,7 +1,7 @@
 package neetcode.tree
 
 class LowestCommonAncestor {
-    fun lowestCommonAncestor(root: TreeNode?, p: TreeNode?, q: TreeNode?): TreeNode? {
+    fun lowestCommonAncestorNormal(root: TreeNode?, p: TreeNode?, q: TreeNode?): TreeNode? {
         var current = root
         while(current != null){
             current = if(p!!.`val` > current.`val` && q!!.`val` > current.`val`){
@@ -14,5 +14,18 @@ class LowestCommonAncestor {
         }
 
         return null
+    }
+
+    fun lowestCommonAncestor(root: TreeNode?, p: TreeNode?, q: TreeNode?): TreeNode? {
+        if (root == null) {
+            return null
+        }
+
+        if(p!!.`val` > root.`val` && q!!.`val` > root.`val`) {
+            return lowestCommonAncestor(root.right, p, q)
+        }else if(p.`val` < root.`val` && q!!.`val` < root.`val`) {
+            return lowestCommonAncestor(root.left, p, q)
+        }
+        return root
     }
 }
