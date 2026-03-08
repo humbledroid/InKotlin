@@ -28,4 +28,15 @@ class LowestCommonAncestor {
         }
         return root
     }
+
+    fun lowestCommonAncestorSeq(root: TreeNode?, p: TreeNode?, q: TreeNode?): TreeNode? {
+        if (root == null) {
+            return null
+        }
+        return when {
+            p!!.`val` > root.`val` && q!!.`val` > root.`val` -> lowestCommonAncestor(root.right, p, q)
+            p.`val` < root.`val` && q!!.`val` < root.`val` -> lowestCommonAncestor(root.left, p, q)
+            else -> root
+        }
+    }
 }
