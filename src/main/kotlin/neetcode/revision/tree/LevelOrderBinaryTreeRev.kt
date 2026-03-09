@@ -1,4 +1,4 @@
-package neetcode.revision
+package neetcode.revision.tree
 
 import neetcode.tree.TreeNode
 
@@ -48,7 +48,6 @@ class LevelOrderBinaryTreeRev {
 
         return res
     }
-
 
 
 }
