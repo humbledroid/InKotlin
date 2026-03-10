@@ -1,7 +1,5 @@
 package neetcode.revision.tree
 
-import neetcode.tree.MaxDepth
-import neetcode.tree.RightSideViewBinaryTree
 import neetcode.tree.TreeNode
 
 class RightSideViewBinaryTreeRev {
