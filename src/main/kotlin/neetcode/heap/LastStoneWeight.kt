@@ -1,6 +1,7 @@
 package neetcode.heap
 
 import java.util.PriorityQueue
+import kotlin.math.abs
 
 class LastStoneWeight {
     fun lastStoneWeight(stones: IntArray): Int {
@@ -19,6 +20,6 @@ class LastStoneWeight {
             }
         }
         minHeap.offer(0)
-        return Math.abs(minHeap.peek())
+        return abs(minHeap.peek())
     }
 }
