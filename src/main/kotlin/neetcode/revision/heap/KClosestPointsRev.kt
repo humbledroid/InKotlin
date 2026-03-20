@@ -1,16 +1,14 @@
-package neetcode.heap
+package neetcode.revision.heap
 
 import java.util.PriorityQueue
 
-class KClosesPoints {
+class KClosestPointsRev {
     fun kClosest(points: Array<IntArray>, k: Int): Array<IntArray> {
         val minHeap = PriorityQueue(compareBy<IntArray> { it[0] * it[0] + it[1] * it[1] })
-
         points.forEach {
             minHeap.offer(it)
         }
-
-        val res = Array(k){ IntArray(2) }
+        val res = Array<IntArray>(k){ IntArray(2) }
         repeat(k) {
             res[it] = minHeap.poll()
         }
