@@ -1,6 +1,8 @@
-package neetcode.trie
+package neetcode.revision.trie
 
-class WordDictionary {
+import neetcode.trie.TrieNode
+
+class WordDictionaryRev {
 
 //    private val store = mutableListOf<String>()
 //
