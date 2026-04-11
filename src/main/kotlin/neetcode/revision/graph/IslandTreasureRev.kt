@@ -1,6 +1,6 @@
-package neetcode.graph
+package neetcode.revision.graph
 
-class IslandTreasure {
+class IslandTreasureRev {
     fun islandsAndTreasure(grid: Array<IntArray>): Unit {
         val rows = grid.size
         val cols = grid[0].size
